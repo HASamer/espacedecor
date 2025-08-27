@@ -1,4 +1,3 @@
-// app/catalog/page.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
@@ -43,13 +42,17 @@ export default function HomePage() {
 
   // keep URL in sync (q, min, max)
   useEffect(() => {
-    const s = new URLSearchParams();
-    if (debouncedQuery.trim()) s.set("q", debouncedQuery.trim());
-    if (range[0] !== absoluteMin) s.set("min", String(range[0]));
-    if (range[1] !== absoluteMax) s.set("max", String(range[1]));
-    const qs = s.toString();
-    router.replace(qs ? `/catalog?${qs}` : "/catalog");
-  }, [debouncedQuery, range, router, absoluteMin, absoluteMax]);
+  const s = new URLSearchParams();
+  if (debouncedQuery.trim()) s.set("q", debouncedQuery.trim());
+  if (range[0] !== absoluteMin) s.set("min", String(range[0]));
+  if (range[1] !== absoluteMax) s.set("max", String(range[1]));
+  const qs = s.toString();
+
+  // ✅ only update URL if there are search params
+  if (qs) {
+    router.replace(`?${qs}`);
+  }
+}, [debouncedQuery, range, router, absoluteMin, absoluteMax]);
 
   const filtered = useMemo(() => {
     const q = debouncedQuery.trim().toLowerCase();
