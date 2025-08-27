@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, Suspense} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { ITEMS } from "@/constants";
@@ -65,6 +65,7 @@ export default function HomePage() {
   }, [debouncedQuery, range]);
 
   return (
+    <Suspense fallback={<div className="p-8 text-gray-500">Loading…</div>}>
     <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-6xl px-6 py-10">
         {/* Controls */}
@@ -161,5 +162,6 @@ export default function HomePage() {
         )}
       </div>
     </div>
+    </Suspense>
   );
 }
