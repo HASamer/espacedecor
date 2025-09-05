@@ -1,20 +1,29 @@
+'use client';
+
 import Link from "next/link";
 import React from "react";
+import { useSidebar } from "@/contexts/SidebarContext";
 
 export default function Header() {
+  const { toggleSidebar } = useSidebar();
+
   return (
     <React.Fragment>
       <header className="bg-white">
         <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center justify-between">
-            <div className="border rounded-md border-blue-900 text-blue-900 bg-gray-100 p-1.5">
+
+            <button 
+              onClick={toggleSidebar}
+              className="border rounded-md border-blue-900 text-blue-900 bg-gray-100 p-1.5 hover:bg-gray-200 transition-colors cursor-pointer"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="size-6"
+                className="size-7"
               >
                 <path
                   strokeLinecap="round"
@@ -22,18 +31,20 @@ export default function Header() {
                   d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75"
                 />
               </svg>
-            </div>
-            <div className="md:mt-10 mt-9">
-              <h1 className="md:text-3xl text-2xl text-center text-blue-900 font-bold mb-8">
+            </button>
+
+            <div >
+              <h1 className="md:text-3xl text-2xl text-center text-blue-900 font-bold ">
                 EspaceDecor
               </h1>
             </div>
+
             <div>
               <div className="flex items-center gap-4 border rounded-md border-blue-900 p-0.5 transition hover:border-teal-700">
                 <div className="sm:flex sm:gap-4">
                   <Link
                     href="/bucket"
-                    className="flex rounded-md bg-blue-900 p-2 text-sm font-medium text-white transition hover:bg-teal-700"
+                    className="flex rounded-md bg-blue-900 p-1 text-sm font-medium text-white transition hover:bg-teal-700"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
