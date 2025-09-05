@@ -37,23 +37,6 @@ export default function Home() {
         <SearchBar />
       </div>
 
-      {/* Results Summary 
-      <div className="mb-4">
-        <p className="text-gray-600 text-sm">
-          Showing {filteredProducts.length} of {ITEMS.length} products
-          {searchQuery && (
-            <span className="ml-1">
-              for "<span className="font-semibold">{searchQuery}</span>"
-            </span>
-          )}
-          {selectedCategory && (
-            <span className="ml-1">
-              in <span className="font-semibold">{selectedCategory}</span>
-            </span>
-          )}
-        </p>
-      </div>
-      */}
       {/* Products Grid */}
       {filteredProducts.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -77,8 +60,7 @@ export default function Home() {
             No products found
           </h3>
           <p className="mt-2 text-gray-500">
-            Try adjusting your search criteria or filters to find what you're
-            looking for.
+            Try adjusting your search criteria
           </p>
         </div>
       )}
