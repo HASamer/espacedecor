@@ -1,6 +1,11 @@
 import Image from "next/image";
+import { Item } from "@/data/products";
 
-export default function ProductCard() {
+interface ProductCardProps {
+  item: Item;
+}
+
+export default function ProductCard({ item }: ProductCardProps) {
   return (
     <div className="relative group">
       {/* Gray overlay (appears on hover) */}
@@ -30,10 +35,10 @@ export default function ProductCard() {
           </svg>
         </div>
       </div>
-      <a href="#" className="block rounded-lg p-4 shadow-md shadow-indigo-100">
+      <a href={`/product/${item.id}`} className="block rounded-lg p-4 shadow-md shadow-indigo-100">
         <Image
-          alt="Home"
-          src="https://i.imgur.com/xReAUxu.jpeg"
+          alt={item.name}
+          src={item.image}
           className="h-56 w-full rounded-md object-cover"
           width={1000}
           height={1000}
@@ -45,15 +50,19 @@ export default function ProductCard() {
             <div>
               <dt className="sr-only">Price</dt>
 
-              <dd className="text-sm text-gray-500">$15</dd>
+              <dd className="text-sm text-gray-500">${item.price}</dd>
             </div>
 
             <div>
               <dt className="sr-only">Name</dt>
 
-              <dd className="font-medium">Sample Personalised mini Box</dd>
+              <dd className="font-medium">{item.name}</dd>
             </div>
           </dl>
+
+          <div className="mt-2 text-sm text-gray-600 line-clamp-2">
+            {item.description}
+          </div>
 
           <div className="mt-6 flex items-center gap-8 text-xs">
             <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
@@ -75,7 +84,7 @@ export default function ProductCard() {
               <div className="mt-1.5 sm:mt-0">
                 <p className="text-gray-500">Dimensions</p>
 
-                <p className="font-medium">6.5 / 4.5 cm</p>
+                <p className="font-medium">{item.dimension}</p>
               </div>
             </div>
 
@@ -104,7 +113,7 @@ export default function ProductCard() {
                 <p className="text-gray-500">Category</p>
 
                 <p className="font-medium border rounded-full px-2 py-0.5 mt-0.5 bg-blue-100 text-blue-900">
-                  Living Room
+                  {item.category}
                 </p>
               </div>
             </div>

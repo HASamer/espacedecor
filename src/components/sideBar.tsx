@@ -1,24 +1,47 @@
-'use client';
+"use client";
 
 import { useSidebar } from "@/contexts/SidebarContext";
+import { useFilter } from "@/contexts/FilterContext";
+import { getCategories, getPriceRange } from "@/data/products";
 
 export default function SideBar() {
   const { isOpen, closeSidebar } = useSidebar();
+  const { 
+    selectedCategory, 
+    setSelectedCategory, 
+    priceRange, 
+    setPriceRange 
+  } = useFilter();
+  
+  const categories = getCategories();
+  const { min: minPrice, max: maxPrice } = getPriceRange();
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(selectedCategory === category ? '' : category);
+  };
+
+  const handlePriceChange = (index: number, value: number) => {
+    const newRange: [number, number] = [...priceRange];
+    newRange[index] = value;
+    setPriceRange(newRange);
+  };
 
   return (
     <>
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-gray-800 opacity-65 z-40"
           onClick={closeSidebar}
         />
       )}
-      
+
       {/* Sidebar */}
-      <div className={`fixed top-0 left-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div
+        className={`fixed top-0 left-0 h-full w-80 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 ${
+          isOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
         <div className="flex h-screen flex-col justify-between border-e border-gray-100 bg-white">
           <div className="px-4 py-6">
             {/* Close button */}
@@ -47,131 +70,107 @@ export default function SideBar() {
               </button>
             </div>
 
-            <ul className="mt-6 space-y-1">
-              <li>
-                <a
-                  href="#"
-                  className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
-                >
-                  General
-                </a>
-              </li>
+            {/* Filters */}
+            <div className="space-y-6">
+              {/* Categories Filter */}
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Categories</h3>
+                <div className="space-y-2">
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="category"
+                      checked={selectedCategory === ''}
+                      onChange={() => setSelectedCategory('')}
+                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                    />
+                    <span className="ml-2 text-sm text-gray-700">All Categories</span>
+                  </label>
+                  {categories.map((category) => (
+                    <label key={category} className="flex items-center">
+                      <input
+                        type="radio"
+                        name="category"
+                        checked={selectedCategory === category}
+                        onChange={() => handleCategoryChange(category)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                      />
+                      <span className="ml-2 text-sm text-gray-700">{category}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
 
-              <li>
-                <details className="group [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                    <span className="text-sm font-medium"> Teams </span>
+              {/* Price Range Filter */}
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Price Range</h3>
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="flex-1">
+                      <label className="block text-xs text-gray-500 mb-1">Min Price</label>
+                      <input
+                        type="number"
+                        min={minPrice}
+                        max={maxPrice}
+                        value={priceRange[0]}
+                        onChange={(e) => handlePriceChange(0, parseInt(e.target.value) || minPrice)}
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block text-xs text-gray-500 mb-1">Max Price</label>
+                      <input
+                        type="number"
+                        min={minPrice}
+                        max={maxPrice}
+                        value={priceRange[1]}
+                        onChange={(e) => handlePriceChange(1, parseInt(e.target.value) || maxPrice)}
+                        className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Price Range Slider */}
+                  <div className="relative">
+                    <input
+                      type="range"
+                      min={minPrice}
+                      max={maxPrice}
+                      value={priceRange[0]}
+                      onChange={(e) => handlePriceChange(0, parseInt(e.target.value))}
+                      className="absolute w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    />
+                    <input
+                      type="range"
+                      min={minPrice}
+                      max={maxPrice}
+                      value={priceRange[1]}
+                      onChange={(e) => handlePriceChange(1, parseInt(e.target.value))}
+                      className="absolute w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                    />
+                  </div>
+                  
+                  <div className="flex justify-between text-xs text-gray-500">
+                    <span>${priceRange[0]}</span>
+                    <span>${priceRange[1]}</span>
+                  </div>
+                </div>
+              </div>
 
-                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="size-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </summary>
-
-                  <ul className="mt-2 space-y-1 px-4">
-                    <li>
-                      <a
-                        href="#"
-                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      >
-                        Banned Users
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      >
-                        Calendar
-                      </a>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                >
-                  Billing
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                >
-                  Invoices
-                </a>
-              </li>
-
-              <li>
-                <details className="group [&_summary::-webkit-details-marker]:hidden">
-                  <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                    <span className="text-sm font-medium"> Account </span>
-
-                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="size-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </span>
-                  </summary>
-
-                  <ul className="mt-2 space-y-1 px-4">
-                    <li>
-                      <a
-                        href="#"
-                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      >
-                        Details
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      >
-                        Security
-                      </a>
-                    </li>
-
-                    <li>
-                      <a
-                        href="#"
-                        className="w-full rounded-lg px-4 py-2 [text-align:_inherit] text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                      >
-                        Logout
-                      </a>
-                    </li>
-                  </ul>
-                </details>
-              </li>
-            </ul>
+              {/* Clear Filters Button */}
+              <button
+                onClick={() => {
+                  setSelectedCategory('');
+                  setPriceRange([minPrice, maxPrice]);
+                }}
+                className="w-full px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Clear All Filters
+              </button>
+            </div>
           </div>
 
+          {/** 
           <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
             <a
               href="#"
@@ -192,6 +191,7 @@ export default function SideBar() {
               </div>
             </a>
           </div>
+          */}
         </div>
       </div>
     </>
