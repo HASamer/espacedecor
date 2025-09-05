@@ -81,12 +81,20 @@ export async function POST(req: Request) {
       },
       200
     );
-  } catch (err: any) {
-    return json({ ok: false, error: String(err?.message ?? err) }, 500);
+  } catch (err: unknown) {
+  let message = "Unknown error";
+
+  if (err instanceof Error) {
+    message = err.message;
+  } else if (typeof err === "string") {
+    message = err;
   }
+
+  return json({ ok: false, error: message }, 500);
+}
 }
 
-function json(payload: any, status = 200) {
+function json(payload: Record<string, unknown> , status = 200) {
   return new NextResponse(JSON.stringify(payload), {
     status,
     headers: {
