@@ -50,7 +50,7 @@ export default function ProductCard({ item }: ProductCardProps) {
             <div>
               <dt className="sr-only">Price</dt>
 
-              <dd className="text-sm text-gray-500">${item.price}</dd>
+              <dd className="text-sm text-gray-500">{item.price} DT</dd>
             </div>
 
             <div>

@@ -24,6 +24,7 @@ export default function SearchBar() {
         </svg>
       </div>
       <input
+        name='searchBar'
         type="text"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}

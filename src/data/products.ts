@@ -11,7 +11,7 @@ export interface Item {
 export const ITEMS: Item[] = [
   {
     id: "PRD-00001",
-    name: "Sample Personalised mini Box",
+    name: "Personalised mini Box",
     description: "A small box that can be personalised with a name or a short message. Perfect for gifting small items like jewelry, trinkets, or keepsakes.",
     dimension: "6.5 / 4.5 cm",
     category: "Box",
@@ -20,7 +20,7 @@ export const ITEMS: Item[] = [
   },
   {
     id: "PRD-00002",
-    name: "Sample Personalised mini Box",
+    name: "Personalised mini Box",
     description: "A small box that can be personalised with a name or a short message. Perfect for gifting small items like jewelry, trinkets, or keepsakes.",
     dimension: "6.5 / 4.5 cm",
     category: "Box",

@@ -45,17 +45,21 @@ export default function SideBar() {
         <div className="flex h-screen flex-col justify-between border-e border-gray-100 bg-white">
           <div className="px-4 py-6">
             {/* Close button */}
-            <div className="flex justify-between items-center mb-6">
-              <span className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
-                Logo
+            <div className="flex justify-between items-center mb-6 border-b pb-3 border-blue-900 -mx-4 px-4">
+              <span className="grid h-10 w-32 place-content-center rounded-lg text-xl">
+                <div >
+              <h1 className="text-center text-blue-900 font-bold ">
+                EspaceDecor
+              </h1>
+            </div>
               </span>
               <button
                 onClick={closeSidebar}
-                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-2 hover:bg-gray-100 text-blue-900 hover:text-red-500 border hover:border-red-500 rounded-lg transition-colors"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6 text-gray-600"
+                  className="h-6 w-6 "
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -74,7 +78,7 @@ export default function SideBar() {
             <div className="space-y-6">
               {/* Categories Filter */}
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-3">Categories</h3>
+                <h3 className="text-md font-medium text-blue-950 mb-3">Categories</h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
                     <input
@@ -103,12 +107,14 @@ export default function SideBar() {
 
               {/* Price Range Filter */}
               <div>
-                <h3 className="text-sm font-medium text-gray-900 mb-3">Price Range</h3>
+                <h3 className="text-md font-medium text-blue-950 mb-3">Price Range</h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex-1">
-                      <label className="block text-xs text-gray-500 mb-1">Min Price</label>
+                      <label htmlFor="minPrice" className="block text-xs text-gray-500 mb-1">Min Price</label>
                       <input
+                        id="minPrice"
+                        name="minPrice"
                         type="number"
                         min={minPrice}
                         max={maxPrice}
@@ -118,8 +124,10 @@ export default function SideBar() {
                       />
                     </div>
                     <div className="flex-1">
-                      <label className="block text-xs text-gray-500 mb-1">Max Price</label>
+                      <label htmlFor="maxPrice" className="block text-xs text-gray-500 mb-1">Max Price</label>
                       <input
+                        id="maxPrice"
+                        name="maxPrice"
                         type="number"
                         min={minPrice}
                         max={maxPrice}
@@ -150,7 +158,7 @@ export default function SideBar() {
                     />
                   </div>
                   
-                  <div className="flex justify-between text-xs text-gray-500">
+                  <div className="flex justify-between text-xs mt-8 text-gray-500">
                     <span>${priceRange[0]}</span>
                     <span>${priceRange[1]}</span>
                   </div>
