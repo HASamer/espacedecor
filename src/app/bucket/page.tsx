@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Bucket() {
@@ -43,10 +44,13 @@ export default function Bucket() {
               <div className="mt-8">
                 <ul className="space-y-4">
                   <li className="flex items-center gap-4">
-                    <img
+                    <Image
                       src="https://i.imgur.com/xReAUxu.jpeg"
                       alt=""
                       className="size-16 rounded-sm object-cover"
+                      width={1000}
+                      height={1000}
+                      priority
                     />
 
                     <div>
@@ -104,20 +108,16 @@ export default function Bucket() {
                       </button>
                     </div>
                   </li>
-
                 </ul>
 
                 <div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
                   <div className="w-screen max-w-lg space-y-4">
                     <dl className="space-y-0.5 text-sm text-blue-900">
-                      
-
                       <div className="flex justify-between !text-base font-medium">
                         <dt>Total</dt>
                         <dd>25 DT</dd>
                       </div>
                     </dl>
-
 
                     <div className="flex justify-end">
                       <a
