@@ -12,7 +12,7 @@ export default function Header() {
       <header className="bg-white">
         <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center justify-between">
-
+            {/* Sidebar Toggle Button */}
             <button 
               onClick={toggleSidebar}
               className="border rounded-md border-blue-900 text-blue-900 bg-gray-100 p-1.5 hover:bg-gray-200 transition-colors cursor-pointer"
