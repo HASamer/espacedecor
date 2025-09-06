@@ -1,10 +1,11 @@
 "use client";
 
-import { use, useMemo } from "react";
+import { use, useMemo, useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ITEMS } from "@/data/products";
 import ProductCard from "@/components/productCard";
+import { useCart } from "@/contexts/CartContext";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;
@@ -12,6 +13,10 @@ interface ProductPageProps {
 
 export default function ProductPage({ params }: ProductPageProps) {
   const { id } = use(params);
+  const { addItem } = useCart();
+  const [quantity, setQuantity] = useState(1);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [itemsPerSlide, setItemsPerSlide] = useState(1);
 
   // Find the current product
   const product = ITEMS.find((item) => item.id === id);
@@ -24,6 +29,64 @@ export default function ProductPage({ params }: ProductPageProps) {
       (item) => item.category === product.category && item.id !== product.id
     ).slice(0, 4); // Limit to 4 suggestions
   }, [product]);
+
+  // Handle responsive items per slide
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      if (width >= 1024) {
+        setItemsPerSlide(3); // Large screens: 3 items
+      } else if (width >= 768) {
+        setItemsPerSlide(2); // Medium screens: 2 items
+      } else {
+        setItemsPerSlide(1); // Small screens: 1 item
+      }
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Calculate total slides based on items per slide
+  const totalSlides = Math.ceil(suggestedProducts.length / itemsPerSlide);
+
+  // Auto-slide effect for suggested products
+  useEffect(() => {
+    if (suggestedProducts.length === 0 || totalSlides <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) => 
+        prevSlide === totalSlides - 1 ? 0 : prevSlide + 1
+      );
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [suggestedProducts.length, totalSlides]);
+
+  const handleQuantityDecrease = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleQuantityIncrease = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value);
+    if (value > 0) {
+      setQuantity(value);
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (product) {
+      addItem(product, quantity);
+      // Optional: Show a success message or reset quantity
+    }
+  };
 
   if (!product) {
     return (
@@ -161,7 +224,9 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <div className="flex items-center justify-center rounded-lg">
                     <button
                       type="button"
-                      className="mx-auto text-gray-600 transition hover:opacity-75 "
+                      onClick={handleQuantityDecrease}
+                      className="mx-auto text-gray-600 transition hover:opacity-75 disabled:opacity-50"
+                      disabled={quantity <= 1}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -182,13 +247,16 @@ export default function ProductPage({ params }: ProductPageProps) {
                     <input
                       type="number"
                       id="Quantity"
-                      defaultValue={1}
+                      value={quantity}
+                      onChange={handleQuantityChange}
+                      min="1"
                       className="h-10 w-18 border-transparent text-center text-xl [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
                     />
 
                     <button
                       type="button"
-                      className="mx-auto text-gray-600 transition hover:opacity-75 "
+                      onClick={handleQuantityIncrease}
+                      className="mx-auto text-gray-600 transition hover:opacity-75"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -208,7 +276,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                   </div>
                 </div>
               </div>
-              <button className=" bg-blue-900 text-white py-1 px-8 rounded-lg transition-colors font-semibold text-lg hover:bg-white hover:text-blue-900 border border-blue-900">
+              <button 
+                onClick={handleAddToCart}
+                className=" bg-blue-900 text-white py-1 px-8 rounded-lg transition-colors font-semibold text-lg hover:bg-white hover:text-blue-900 border border-blue-900"
+              >
                 Add
               </button>
             </div>
@@ -287,10 +358,89 @@ export default function ProductPage({ params }: ProductPageProps) {
           <h2 className="text-3xl font-bold text-blue-950 mb-8 text-center">
             You might also like
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {suggestedProducts.map((item) => (
-              <ProductCard key={item.id} item={item} />
-            ))}
+          <div className="relative overflow-hidden">
+            {/* Slider container */}
+            <div 
+              className="flex transition-transform duration-1500 ease-in-out"
+              style={{ transform: `translateX(-${currentSlide * (100 / itemsPerSlide)}%)` }}
+            >
+              {suggestedProducts.map((item, index) => (
+                <div 
+                  key={item.id} 
+                  className={`flex-shrink-0 px-2 ${
+                    itemsPerSlide === 1 ? 'w-full' : 
+                    itemsPerSlide === 2 ? 'w-1/2' : 'w-1/3'
+                  }`}
+                >
+                  <ProductCard item={item} />
+                </div>
+              ))}
+            </div>
+            
+            {/* Navigation dots */}
+            {totalSlides > 1 && (
+              <div className="flex justify-center mt-6 space-x-2">
+                {Array.from({ length: totalSlides }).map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-colors ${
+                      index === currentSlide 
+                        ? 'bg-blue-900' 
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* Navigation arrows */}
+            {totalSlides > 1 && (
+              <>
+                <button
+                  onClick={() => setCurrentSlide(currentSlide === 0 ? totalSlides - 1 : currentSlide - 1)}
+                  className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white shadow-md rounded-full p-2 hover:bg-gray-50 transition-colors"
+                  aria-label="Previous slide"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-blue-900"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                  </svg>
+                </button>
+
+                <button
+                  onClick={() => setCurrentSlide(currentSlide === totalSlides - 1 ? 0 : currentSlide + 1)}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white shadow-md rounded-full p-2 hover:bg-gray-50 transition-colors"
+                  aria-label="Next slide"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6 text-blue-900"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}

@@ -3,9 +3,11 @@
 import Link from "next/link";
 import React from "react";
 import { useSidebar } from "@/contexts/SidebarContext";
+import { useCart } from "@/contexts/CartContext";
 
 export default function Header() {
   const { toggleSidebar } = useSidebar();
+  const { state } = useCart();
 
   return (
     <React.Fragment>
@@ -62,7 +64,7 @@ export default function Header() {
                     </svg>
 
                     <div className=" -ml-2 px-1 mb-3 rounded-full text-white bg-red-600 ">
-                      0
+                      {state.totalItems}
                     </div>
                   </Link>
                 </div>

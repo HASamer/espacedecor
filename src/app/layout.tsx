@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import SideBar from "@/components/sideBar";
 import { SidebarProvider } from "@/contexts/SidebarContext";
 import { FilterProvider } from "@/contexts/FilterContext";
+import { CartProvider } from "@/contexts/CartContext";
 
 export default function RootLayout({
   children,
@@ -13,14 +14,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="pt-16">
-        <SidebarProvider>
-          <FilterProvider>
-            <Header />
-            <SideBar />
-            {children}
-            <Footer />
-          </FilterProvider>
-        </SidebarProvider>
+        <CartProvider>
+          <SidebarProvider>
+            <FilterProvider>
+              <Header />
+              <SideBar />
+              {children}
+              <Footer />
+            </FilterProvider>
+          </SidebarProvider>
+        </CartProvider>
       </body>
     </html>
   );
