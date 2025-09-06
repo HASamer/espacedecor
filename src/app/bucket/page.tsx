@@ -33,21 +33,21 @@ export default function Bucket() {
       </div>
       <div>
         <section>
-          <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+          <div className="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-3xl">
               <header className="text-center">
-                <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
+                <h1 className="text-lg font-bold text-blue-900 sm:text-3xl">
                   Your Cart
                 </h1>
               </header>
 
               <div className="mt-8">
                 <ul className="space-y-4">
-                  <li className="flex items-center gap-4">
+                  <li className="flex items-center shadow p-2 rounded-lg gap-4">
                     <Image
                       src="https://i.imgur.com/xReAUxu.jpeg"
                       alt=""
-                      className="size-16 rounded-sm object-cover"
+                      className="size-16 rounded-md object-cover"
                       width={1000}
                       height={1000}
                       priority
@@ -58,14 +58,14 @@ export default function Bucket() {
                         Personalised mini Box
                       </h3>
 
-                      <dl className="mt-0.5 space-y-px text-[12px] text-gray-600">
+                      <dl className="space-y-px text-[12px] text-gray-600">
                         <div>
                           <dt className="inline">Dimension: </dt>
                           <dd className="inline">6.5 / 4.5 cm</dd>
                         </div>
 
-                        <div>
-                          <dt className="inline">Price: </dt>
+                        <div className="font-medium text-green-600">
+                          <dt className="inline">Prix: </dt>
                           <dd className="inline">25 DT</dd>
                         </div>
                       </dl>
@@ -84,7 +84,7 @@ export default function Bucket() {
                           min="1"
                           value="1"
                           id="Line1Qty"
-                          className="h-8 w-12 rounded-sm border border-gray-200 bg-gray-50 p-0 text-center text-lg text-gray-600 [-moz-appearance:_textfield] focus:outline-hidden [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                          className="h-8 w-12 rounded-md border border-gray-200 bg-gray-50 p-0 text-center text-lg text-gray-600 [-moz-appearance:_textfield] focus:outline-hidden [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
                         />
                       </form>
 
@@ -108,9 +108,11 @@ export default function Bucket() {
                       </button>
                     </div>
                   </li>
+
+                  
                 </ul>
 
-                <div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
+                <div className="mt-8 flex justify-end border-t border-blue-900 pt-8">
                   <div className="w-screen max-w-lg space-y-4">
                     <dl className="space-y-0.5 text-sm text-blue-900">
                       <div className="flex justify-between !text-base font-medium">

@@ -15,7 +15,7 @@ export default function Header() {
             {/* Sidebar Toggle Button */}
             <button 
               onClick={toggleSidebar}
-              className="border rounded-md border-blue-900 text-blue-900 bg-gray-100 p-1.5 hover:bg-gray-200 transition-colors cursor-pointer"
+              className="border rounded-md border-blue-900 text-blue-900 bg-gray-100 p-1.5 hover:bg-blue-900 hover:text-white  transition-colors cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -34,17 +34,17 @@ export default function Header() {
             </button>
 
             <div >
-              <h1 className="md:text-3xl text-2xl text-center text-blue-900 font-bold ">
+              <Link href="/" className="md:text-3xl text-2xl text-center text-blue-900 font-bold ">
                 EspaceDecor
-              </h1>
+              </Link>
             </div>
 
             <div>
-              <div className="flex items-center gap-4 border rounded-md border-blue-900 p-0.5 transition hover:border-teal-700">
+              <div className="flex items-center gap-4 border rounded-md border-blue-900 p-0.5 transition">
                 <div className="sm:flex sm:gap-4">
                   <Link
                     href="/bucket"
-                    className="flex rounded-md bg-blue-900 p-1 text-sm font-medium text-white transition hover:bg-teal-700"
+                    className="flex rounded-md bg-blue-900 p-1 text-sm font-medium text-white transition hover:bg-white hover:text-blue-900 border border-blue-900"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -61,7 +61,7 @@ export default function Header() {
                       />
                     </svg>
 
-                    <div className=" -ml-2 px-1 mb-3 rounded-full bg-red-600 ">
+                    <div className=" -ml-2 px-1 mb-3 rounded-full text-white bg-red-600 ">
                       0
                     </div>
                   </Link>
