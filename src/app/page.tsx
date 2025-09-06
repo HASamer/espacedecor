@@ -47,12 +47,18 @@ export default function Home() {
       ) : (
         <div className="text-center py-12">
           <div className="mx-auto h-24 w-24 text-gray-400">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-25 text-blue-900"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={1}
-                d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.467-.818-6.127-2.186C5.152 11.916 5.002 10.968 5 10c.002-.968.152-1.916.873-2.814C7.533 5.818 9.66 5 12 5s4.467.818 6.127 2.186C18.848 8.084 18.998 9.032 19 10c-.002.968-.152 1.916-.873 2.814A7.962 7.962 0 0112 15z"
+                d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
               />
             </svg>
           </div>

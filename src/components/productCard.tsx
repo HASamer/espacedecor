@@ -62,12 +62,9 @@ export default function ProductCard({ item }: ProductCardProps) {
               </div>
             </dl>
 
-            <div className="mt-2 text-sm text-gray-600 line-clamp-2">
-              {item.description}
-            </div>
 
-            <div className="mt-6 flex items-center gap-8 text-xs">
-              <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
+            <div className="mt-6 grid grid-cols-2 gap-4 text-xs">
+              <div className="inline-flex  items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -90,7 +87,7 @@ export default function ProductCard({ item }: ProductCardProps) {
                 </div>
               </div>
 
-              <div className="sm:inline-flex sm:shrink-0 sm:items-center sm:gap-2">
+              <div className="inline-flex  items-center gap-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

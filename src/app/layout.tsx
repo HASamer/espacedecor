@@ -12,7 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className="pt-16">
         <SidebarProvider>
           <FilterProvider>
             <Header />

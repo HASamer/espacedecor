@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { use, useMemo } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ITEMS } from '@/data/products';
-import ProductCard from '@/components/productCard';
+import { use, useMemo } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ITEMS } from "@/data/products";
+import ProductCard from "@/components/productCard";
 
 interface ProductPageProps {
   params: Promise<{ id: string }>;
@@ -12,17 +12,16 @@ interface ProductPageProps {
 
 export default function ProductPage({ params }: ProductPageProps) {
   const { id } = use(params);
-  
+
   // Find the current product
-  const product = ITEMS.find(item => item.id === id);
-  
+  const product = ITEMS.find((item) => item.id === id);
+
   // Get suggested products from the same category (excluding the current product)
   const suggestedProducts = useMemo(() => {
     if (!product) return [];
-    
-    return ITEMS.filter(item => 
-      item.category === product.category && 
-      item.id !== product.id
+
+    return ITEMS.filter(
+      (item) => item.category === product.category && item.id !== product.id
     ).slice(0, 4); // Limit to 4 suggestions
   }, [product]);
 
@@ -30,10 +29,14 @@ export default function ProductPage({ params }: ProductPageProps) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Product Not Found</h1>
-          <p className="text-gray-600 mb-6">The product you're looking for doesn't exist.</p>
-          <Link 
-            href="/" 
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+            Product Not Found
+          </h1>
+          <p className="text-gray-600 mb-6">
+            The product you're looking for doesn't exist.
+          </p>
+          <Link
+            href="/"
             className="inline-block bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-white hover:text-blue-900 border border-blue-900 font-semibold transition-colors"
           >
             Back to Home
@@ -48,11 +51,12 @@ export default function ProductPage({ params }: ProductPageProps) {
       {/* Breadcrumb */}
       <nav className="mb-8">
         <div className="flex items-center space-x-2 text-sm text-gray-600">
-          <Link href="/" className="hover:text-blue-600">Home</Link>
+          <Link href="/" className="hover:text-blue-600">
+            Home
+          </Link>
           <span>/</span>
           <span className="text-gray-900">{product.name}</span>
         </div>
-
       </nav>
 
       {/* Product Details */}
@@ -77,27 +81,29 @@ export default function ProductPage({ params }: ProductPageProps) {
             <h1 className="text-4xl font-bold text-gray-900 mb-4">
               {product.name}
             </h1>
-            <p className="text-3xl font-semibold text-blue-600 mb-6">
+            <p className="text-3xl font-semibold text-green-700 mb-6">
               {product.price} DT
             </p>
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">Description</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              Description
+            </h3>
             <p className="text-gray-700 leading-relaxed text-lg">
               {product.description}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex items-center space-x-3 px-4 py-2 bg-gray-50 rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="w-6 h-6 text-blue-600"
+                className="w-6 h-6 text-blue-900"
               >
                 <path
                   strokeLinecap="round"
@@ -107,18 +113,20 @@ export default function ProductPage({ params }: ProductPageProps) {
               </svg>
               <div>
                 <p className="text-sm text-gray-500">Dimensions</p>
-                <p className="font-semibold text-gray-900">{product.dimension}</p>
+                <p className="font-semibold text-gray-900">
+                  {product.dimension}
+                </p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-3 p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center space-x-3 px-4 py-2 bg-gray-50 rounded-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth="1.5"
                 stroke="currentColor"
-                className="w-6 h-6 text-blue-600"
+                className="w-6 h-6 text-blue-900"
               >
                 <path
                   strokeLinecap="round"
@@ -132,8 +140,8 @@ export default function ProductPage({ params }: ProductPageProps) {
                 />
               </svg>
               <div>
-                <p className="text-sm text-gray-500">Category</p>
-                <span className="inline-block bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+                <p className="text-sm text-gray-500 mb-1">Category</p>
+                <span className="inline-block bg-blue-100 border border-blue-900 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
                   {product.category}
                 </span>
               </div>
@@ -141,37 +149,130 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
 
           {/* Action buttons */}
-          <div className="space-y-4">
-            <button className="w-full bg-blue-900 text-white py-4 px-8 rounded-lg transition-colors font-semibold text-lg hover:bg-white hover:text-blue-900 border border-blue-900">
-              Add to Cart
-            </button>
+          <div>
+            <div className="grid grid-cols-3 gap-4">
+              <div className=" col-span-2 bg-white text-blue-900 py-1 rounded-lg transition-colors font-semibold text-lg hover:bg-white hover:text-blue-900 border border-blue-900">
+                <div>
+                  <label htmlFor="Quantity" className="sr-only">
+                    {" "}
+                    Quantity{" "}
+                  </label>
+
+                  <div className="flex items-center justify-center rounded-lg">
+                    <button
+                      type="button"
+                      className="mx-auto text-gray-600 transition hover:opacity-75 "
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 12h14"
+                        />
+                      </svg>
+                    </button>
+
+                    <input
+                      type="number"
+                      id="Quantity"
+                      defaultValue={1}
+                      className="h-10 w-18 border-transparent text-center text-xl [-moz-appearance:_textfield] [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                    />
+
+                    <button
+                      type="button"
+                      className="mx-auto text-gray-600 transition hover:opacity-75 "
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="1.5"
+                        stroke="currentColor"
+                        className="size-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 4.5v15m7.5-7.5h-15"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button className=" bg-blue-900 text-white py-1 px-8 rounded-lg transition-colors font-semibold text-lg hover:bg-white hover:text-blue-900 border border-blue-900">
+                Add
+              </button>
+            </div>
           </div>
 
           {/* Additional product features */}
-          <div className="border-t pt-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Product Features</h3>
+          <div className="border-t border-blue-950 pt-6">
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">
+              Product Features
+            </h3>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                <svg
+                  className="w-5 h-5 text-green-500 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
-                High-quality materials
+                MDF materials
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                <svg
+                  className="w-5 h-5 text-green-500 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 Handcrafted with care
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                <svg
+                  className="w-5 h-5 text-green-500 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 Perfect for gifting
               </li>
               <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                <svg
+                  className="w-5 h-5 text-green-500 mr-3"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
                 Easy to maintain
               </li>
@@ -182,8 +283,8 @@ export default function ProductPage({ params }: ProductPageProps) {
 
       {/* Suggested products */}
       {suggestedProducts.length > 0 && (
-        <div className="border-t pt-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+        <div className="border-t border-blue-950 pt-12">
+          <h2 className="text-3xl font-bold text-blue-950 mb-8 text-center">
             You might also like
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
