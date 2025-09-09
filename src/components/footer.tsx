@@ -1,4 +1,66 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // Clear message after 5 seconds
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage('');
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!email || !isValidEmail(email)) {
+      setMessage('Please enter a valid email address');
+      setIsSuccess(false);
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/newsletter', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        setMessage(data.duplicate ? 'You are already subscribed!' : 'Successfully subscribed to our newsletter!');
+        setIsSuccess(true);
+        setEmail('');
+      } else {
+        setMessage(data.error || 'Failed to subscribe. Please try again.');
+        setIsSuccess(false);
+      }
+    } catch (error) {
+      setMessage('Failed to subscribe. Please try again.');
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
+  };
+
   return (
     <footer className="bg-white">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -22,24 +84,36 @@ export default function Footer() {
             </div>
 
             <div className="col-span-2 lg:col-span-3 lg:flex lg:items-end">
-              <form className="w-full">
+              <form className="w-full" onSubmit={handleSubmit}>
                 <label htmlFor="UserEmail" className="sr-only">
-                  {" "}
-                  Email{" "}
+                  Email
                 </label>
 
                 <div className="border border-gray-100 p-2 focus-within:ring-3 sm:flex sm:items-center sm:gap-4">
                   <input
                     type="email"
                     id="UserEmail"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="samerhadjali@gmail.com"
                     className="w-full border-none focus:border-transparent focus:ring-transparent sm:text-sm"
+                    disabled={isLoading}
                   />
 
-                  <button className="mt-1 w-full bg-blue-900 px-6 py-3 text-sm font-bold tracking-wide text-white uppercase transition-none hover:bg-gray-500 sm:mt-0 sm:w-auto sm:shrink-0">
-                    Sign Up
+                  <button 
+                    type="submit"
+                    disabled={isLoading}
+                    className="mt-1 w-full bg-blue-900 px-6 py-3 text-sm font-bold tracking-wide text-white uppercase transition-none hover:bg-gray-500 disabled:bg-gray-400 disabled:cursor-not-allowed sm:mt-0 sm:w-auto sm:shrink-0"
+                  >
+                    {isLoading ? 'Signing Up...' : 'Sign Up'}
                   </button>
                 </div>
+                
+                {message && (
+                  <p className={`mt-2 text-sm ${isSuccess ? 'text-green-600' : 'text-red-600'}`}>
+                    {message}
+                  </p>
+                )}
               </form>
             </div>
 
