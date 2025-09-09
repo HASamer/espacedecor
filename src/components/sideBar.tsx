@@ -129,7 +129,6 @@ export default function SideBar() {
                         id="maxPrice"
                         name="maxPrice"
                         type="number"
-                        min={minPrice}
                         max={maxPrice}
                         value={priceRange[1]}
                         onChange={(e) => handlePriceChange(1, parseInt(e.target.value) || maxPrice)}
