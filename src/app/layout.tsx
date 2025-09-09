@@ -6,6 +6,14 @@ import { SidebarProvider } from "@/contexts/SidebarContext";
 import { FilterProvider } from "@/contexts/FilterContext";
 import { CartProvider } from "@/contexts/CartContext";
 
+export const metadata = {
+  title: {
+    default: "EspaceDecor",
+    template: "%s | EspaceDecor",
+  },
+  description: "EspaceDecor — décor, inspiration, and interior solutions.",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

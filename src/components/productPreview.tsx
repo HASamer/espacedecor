@@ -3,7 +3,7 @@
 import React, { useMemo } from 'react';
 import Image from 'next/image';
 import { useProductPreview } from '@/contexts/ProductPreviewContext';
-import { ITEMS, Item } from '@/data/products';
+import { ITEMS } from '@/data/products';
 import ProductCard from './productCard';
 
 export default function ProductPreview() {

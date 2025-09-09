@@ -358,7 +358,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           <h2 className="text-3xl font-bold text-blue-950 mb-8 text-center">
             You might also like
           </h2>
-          <div className="relative overflow-hidden">
+          <div className="relative">
             {/* Slider container */}
             <div 
               className="flex transition-transform duration-1500 ease-in-out"
