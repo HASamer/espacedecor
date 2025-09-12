@@ -81,9 +81,9 @@ export default function CheckoutPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Your cart is empty
-          </h1>
+          </h2>
           <p className="text-gray-600 mb-6">
             Add some items to your cart before proceeding to checkout.
           </p>
@@ -107,9 +107,9 @@ export default function CheckoutPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Order Submitted Successfully!
-          </h1>
+          </h2>
           <p className="text-gray-600 mb-6">
             Thank you for your order. We will contact you shortly to confirm the details.
           </p>

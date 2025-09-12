@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ITEMS } from "@/data/products";
 import ProductCard from "@/components/productCard";
+import ProductSchema from "@/components/ProductSchema";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 import { useCart } from "@/contexts/CartContext";
 
 interface ProductPageProps {
@@ -92,9 +94,9 @@ export default function ProductPage({ params }: ProductPageProps) {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
             Product Not Found
-          </h1>
+          </h2>
           <p className="text-gray-600 mb-6">
             The product does not exist.
           </p>
@@ -110,9 +112,12 @@ export default function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* Breadcrumb */}
-      <nav className="mb-8">
+    <>
+      <ProductSchema product={product} />
+      <BreadcrumbSchema product={product} />
+      <div className="container mx-auto px-4 py-8">
+        {/* Breadcrumb */}
+        <nav className="mb-8">
         <div className="flex items-center space-x-2 text-sm text-gray-600">
           <Link href="/" className="hover:text-blue-600">
             Home
@@ -150,9 +155,9 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-3">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">
               Description
-            </h3>
+            </h2>
             <p className="text-gray-700 leading-relaxed text-lg">
               {product.description}
             </p>
@@ -287,9 +292,9 @@ export default function ProductPage({ params }: ProductPageProps) {
 
           {/* Additional product features */}
           <div className="border-t border-blue-950 pt-6">
-            <h3 className="text-lg font-semibold text-blue-900 mb-4">
+            <h2 className="text-lg font-semibold text-blue-900 mb-4">
               Product Features
-            </h3>
+            </h2>
             <ul className="space-y-2 text-gray-600">
               <li className="flex items-center">
                 <svg
@@ -445,5 +450,6 @@ export default function ProductPage({ params }: ProductPageProps) {
         </div>
       )}
     </div>
+    </>
   );
 }

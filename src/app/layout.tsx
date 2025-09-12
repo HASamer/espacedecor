@@ -10,7 +10,7 @@ const site = {
   name: "EspaceDecor",
   url: "https://www.espacedecor.tn",
   desc:
-    "Découvrez une large sélection d’articles décoratifs, cadeaux uniques, coffrets cadeaux personnalisés et objets en découpe laser. Commandez en ligne en Tunisie !",
+    "Découvrez une large sélection d’articles décoratifs, cadeaux uniques, coffrets cadeaux personnalisés et objets en découpe laser. Commandez en ligne en Tunisie",
   ogImage: "/icons/DarkIconWithoutBack.png", // Place ce fichier dans /public/og/ (1200×630 conseillé)
 };
 
@@ -68,7 +68,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fr">
       <body className="pt-16">
         <CartProvider>
           <SidebarProvider>
