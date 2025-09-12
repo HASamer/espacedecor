@@ -56,6 +56,7 @@ export default function Bucket() {
               <div className="mt-8">
                 {state.items.length === 0 ? (
                   <div className="text-center py-8">
+                    <h2 className="sr-only">Empty Cart Status</h2>
                     <p className="text-gray-600 text-lg mb-4">Your cart is empty</p>
                     <Link
                       href="/"
@@ -65,7 +66,9 @@ export default function Bucket() {
                     </Link>
                   </div>
                 ) : (
-                  <ul className="space-y-4">
+                  <>
+                    <h2 className="sr-only">Cart Items</h2>
+                    <ul className="space-y-4">
                     {state.items.map((item) => (
                       <li key={item.id} className="flex items-center shadow p-2 rounded-lg gap-4">
                         <Image
@@ -136,6 +139,7 @@ export default function Bucket() {
                       </li>
                     ))}
                   </ul>
+                  </>
                 )}
 
                 <div className="mt-8 flex justify-end border-t border-blue-900 pt-8">

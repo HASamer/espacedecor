@@ -32,6 +32,9 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-2">
+      {/* Page Title - Hidden for SEO */}
+      <h1 className="sr-only">EspaceDecor - Articles Décoratifs, Cadeaux et Découpe Laser en Tunisie</h1>
+      
       {/* Search Bar */}
       <div className="mb-6">
         <SearchBar />
