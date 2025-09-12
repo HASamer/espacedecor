@@ -9,7 +9,14 @@ import { useFilter } from "@/contexts/FilterContext";
 import { useMemo, useEffect } from "react";
 
 export default function Home() {
-  const { searchQuery, selectedCategory, priceRange, currentPage, setCurrentPage, itemsPerPage } = useFilter();
+  const {
+    searchQuery,
+    selectedCategory,
+    priceRange,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+  } = useFilter();
 
   // Filter products based on search query, category, and price range
   const filteredProducts = useMemo(() => {
@@ -66,7 +73,7 @@ export default function Home() {
               <ProductCard key={item.id} item={item} />
             ))}
           </div>
-          
+
           {/* Pagination */}
           <Pagination totalItems={totalFilteredProducts} />
         </>

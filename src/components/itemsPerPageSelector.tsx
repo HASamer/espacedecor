@@ -13,7 +13,7 @@ export default function ItemsPerPageSelector() {
   };
   
   return (
-    <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
+    <div className="flex items-center gap-2 text-sm justify-center text-gray-600 mb-4">
       <label htmlFor="items-per-page" className="font-medium">
         Items per page:
       </label>
