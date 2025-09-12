@@ -12,6 +12,10 @@ interface FilterContextType {
   setPriceRange: (range: [number, number]) => void;
   minPrice: number;
   maxPrice: number;
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  itemsPerPage: number;
+  setItemsPerPage: (items: number) => void;
 }
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -22,6 +26,8 @@ export function FilterProvider({ children }: { children: ReactNode }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [priceRange, setPriceRange] = useState<[number, number]>([minPrice, maxPrice]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(12);
 
   return (
     <FilterContext.Provider value={{ 
@@ -32,7 +38,11 @@ export function FilterProvider({ children }: { children: ReactNode }) {
       priceRange,
       setPriceRange,
       minPrice,
-      maxPrice
+      maxPrice,
+      currentPage,
+      setCurrentPage,
+      itemsPerPage,
+      setItemsPerPage
     }}>
       {children}
     </FilterContext.Provider>
