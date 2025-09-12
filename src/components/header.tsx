@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import React from "react";
 import { useSidebar } from "@/contexts/SidebarContext";
 import { useCart } from "@/contexts/CartContext";
+import Image from "next/image";
 
 export default function Header() {
   const { toggleSidebar } = useSidebar();
@@ -15,7 +16,7 @@ export default function Header() {
         <div className="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
           <div className="flex flex-1 items-center justify-between">
             {/* Sidebar Toggle Button */}
-            <button 
+            <button
               onClick={toggleSidebar}
               className="border rounded-md border-blue-900 text-blue-900 bg-gray-100 p-1.5 hover:bg-blue-900 hover:text-white  transition-colors cursor-pointer"
             >
@@ -35,9 +36,18 @@ export default function Header() {
               </svg>
             </button>
 
-            <div >
-              <Link href="/" className="md:text-3xl text-2xl text-center text-blue-900 font-bold ">
-                EspaceDecor
+            <div>
+              <Link
+                href="/"
+              >
+                <Image
+                  alt="espacedecor"
+                  src="/logo/EspaceDecorLightLogoWithoutBack.png"
+                  className="h-20 mt-3 rounded-md object-contain"
+                  width={500}
+                  height={500}
+                  priority
+                />
               </Link>
             </div>
 
