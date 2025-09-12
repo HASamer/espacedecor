@@ -2,12 +2,21 @@
 
 import ProductCard from "@/components/productCard";
 import SearchBar from "@/components/searchBar";
+import Pagination from "@/components/pagination";
+import ItemsPerPageSelector from "@/components/itemsPerPageSelector";
 import { ITEMS } from "@/data/products";
 import { useFilter } from "@/contexts/FilterContext";
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 
 export default function Home() {
-  const { searchQuery, selectedCategory, priceRange } = useFilter();
+  const {
+    searchQuery,
+    selectedCategory,
+    priceRange,
+    currentPage,
+    setCurrentPage,
+    itemsPerPage,
+  } = useFilter();
 
   // Filter products based on search query, category, and price range
   const filteredProducts = useMemo(() => {
@@ -30,23 +39,44 @@ export default function Home() {
     });
   }, [searchQuery, selectedCategory, priceRange]);
 
+  // Calculate pagination
+  const totalFilteredProducts = filteredProducts.length;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory, priceRange, setCurrentPage]);
+
   return (
     <div className="container mx-auto px-4 py-2">
       {/* Page Title - Hidden for SEO */}
-      <h1 className="sr-only">EspaceDecor - Articles Décoratifs, Cadeaux et Découpe Laser en Tunisie</h1>
-      
+      <h1 className="sr-only">
+        EspaceDecor - Articles Décoratifs, Cadeaux et Découpe Laser en Tunisie
+      </h1>
+
       {/* Search Bar */}
       <div className="mb-6">
         <SearchBar />
       </div>
 
+      {/* Items Per Page Selector */}
+      <ItemsPerPageSelector />
+
       {/* Products Grid */}
-      {filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((item) => (
-            <ProductCard key={item.id} item={item} />
-          ))}
-        </div>
+      {paginatedProducts.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {paginatedProducts.map((item) => (
+              <ProductCard key={item.id} item={item} />
+            ))}
+          </div>
+
+          {/* Pagination */}
+          <Pagination totalItems={totalFilteredProducts} />
+        </>
       ) : (
         <div className="text-center py-12">
           <div className="mx-auto h-24 w-24 text-gray-400">

@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const productUrl = `${siteUrl}/product/${product.id}`;
   
   return {
-    title: `${product.name} - ${product.price} DT | EspaceDecor`,
+    title: `EspaceDecor | ${product.name}`,
     description: `${product.description} Dimensions: ${product.dimension}. Catégorie: ${product.category}. Commandez en ligne en Tunisie.`,
     keywords: [
       product.name,
