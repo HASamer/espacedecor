@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 export default function Footer() {
@@ -66,7 +68,19 @@ export default function Footer() {
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-start lg:gap-8">
           <div className="text-blue-900 text-2xl font-bold">
-            <p>EspaceDecor</p>
+            <Link
+                href="/"
+                className="grid h-10 w-32 place-content-center rounded-lg text-xl"
+              >
+                <Image
+                  alt="espacedecor"
+                  src= "/logo/EspaceDecorLightLogoWithoutBack.png"
+                  className="w-full rounded-md object-cover"
+                  width={500}
+                  height={500}
+                  priority
+                />
+              </Link>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-8 lg:mt-0 lg:grid-cols-5 lg:gap-y-16">
@@ -89,7 +103,7 @@ export default function Footer() {
                   Email
                 </label>
 
-                <div className="border border-gray-100 p-2 focus-within:ring-3 sm:flex sm:items-center sm:gap-4">
+                <div className="border border-gray-100 p-2 rounded-xl focus-within:ring-3 sm:flex sm:items-center sm:gap-4">
                   <input
                     type="email"
                     id="UserEmail"
@@ -103,7 +117,7 @@ export default function Footer() {
                   <button 
                     type="submit"
                     disabled={isLoading}
-                    className="mt-1 w-full bg-blue-900 px-6 py-3 text-sm font-bold tracking-wide text-white uppercase transition-none hover:bg-gray-500 disabled:bg-gray-400 disabled:cursor-not-allowed sm:mt-0 sm:w-auto sm:shrink-0"
+                    className="mt-1 w-full rounded-lg bg-blue-900 px-6 py-3 text-sm font-bold tracking-wide text-white uppercase transition-none hover:bg-gray-500 disabled:bg-gray-400 disabled:cursor-not-allowed sm:mt-0 sm:w-auto sm:shrink-0"
                   >
                     {isLoading ? 'Signing Up...' : 'Sign Up'}
                   </button>
@@ -123,12 +137,12 @@ export default function Footer() {
                   href="https://www.facebook.com/Espace2decor"
                   rel="noreferrer"
                   target="_blank"
-                  className="text-gray-700 transition hover:opacity-75"
+                  className="text-gray-700 transition flex items-center gap-2  hover:text-white hover:bg-blue-950 rounded-lg py-1 px-2 "
                 >
-                  <span className="sr-only">Facebook</span>
+                  Espace2decor
 
                   <svg
-                    className="size-6"
+                    className="size-8 animate-pulse"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                     aria-hidden="true"
@@ -147,12 +161,12 @@ export default function Footer() {
                   href="https://www.instagram.com/espace2decor/"
                   rel="noreferrer"
                   target="_blank"
-                  className="text-gray-700 transition hover:opacity-75"
+                  className="text-gray-700 transition flex items-center gap-2 hover:text-white hover:bg-blue-950 rounded-lg py-1 px-2 "
                 >
-                  <span className="sr-only">Instagram</span>
+                  Espace2decor
 
                   <svg
-                    className="size-6"
+                    className="size-8 animate-pulse"
                     fill="currentColor"
                     viewBox="0 0 24 24"
                     aria-hidden="true"
@@ -170,7 +184,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 border-t border-gray-100 pt-8">
-          <div className="flex sm:justify-center md:justify-end">
+          <div className="flex 
+          justify-center ">
             <p className="text-xs text-gray-500">
               &copy; 2025. EspaceDecor. All rights reserved.
             </p>

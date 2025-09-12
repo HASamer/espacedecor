@@ -3,21 +3,19 @@
 import { useSidebar } from "@/contexts/SidebarContext";
 import { useFilter } from "@/contexts/FilterContext";
 import { getCategories, getPriceRange } from "@/data/products";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function SideBar() {
   const { isOpen, closeSidebar } = useSidebar();
-  const { 
-    selectedCategory, 
-    setSelectedCategory, 
-    priceRange, 
-    setPriceRange 
-  } = useFilter();
-  
+  const { selectedCategory, setSelectedCategory, priceRange, setPriceRange } =
+    useFilter();
+
   const categories = getCategories();
   const { min: minPrice, max: maxPrice } = getPriceRange();
 
   const handleCategoryChange = (category: string) => {
-    setSelectedCategory(selectedCategory === category ? '' : category);
+    setSelectedCategory(selectedCategory === category ? "" : category);
   };
 
   const handlePriceChange = (index: number, value: number) => {
@@ -46,13 +44,19 @@ export default function SideBar() {
           <div className="px-4 py-6">
             {/* Close button */}
             <div className="flex justify-between items-center mb-6 border-b pb-3 border-blue-900 -mx-4 px-4">
-              <span className="grid h-10 w-32 place-content-center rounded-lg text-xl">
-                <div >
-              <h1 className="text-center text-blue-900 font-bold ">
-                EspaceDecor
-              </h1>
-            </div>
-              </span>
+              <Link
+                href="/"
+                className="grid h-10 w-32 place-content-center rounded-lg text-xl"
+              >
+                <Image
+                  alt="espacedecor"
+                  src= "/logo/EspaceDecorLightLogoWithoutBack.png"
+                  className="w-full rounded-md object-cover"
+                  width={500}
+                  height={500}
+                  priority
+                />
+              </Link>
               <button
                 onClick={closeSidebar}
                 className="p-2 hover:bg-gray-100 text-blue-900 hover:text-red-500 border hover:border-red-500 rounded-lg transition-colors"
@@ -78,17 +82,21 @@ export default function SideBar() {
             <div className="space-y-6">
               {/* Categories Filter */}
               <div>
-                <h3 className="text-md font-medium text-blue-950 mb-3">Categories</h3>
+                <h3 className="text-md font-medium text-blue-950 mb-3">
+                  Categories
+                </h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
                     <input
                       type="radio"
                       name="category"
-                      checked={selectedCategory === ''}
-                      onChange={() => setSelectedCategory('')}
+                      checked={selectedCategory === ""}
+                      onChange={() => setSelectedCategory("")}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                     />
-                    <span className="ml-2 text-sm text-gray-700">All Categories</span>
+                    <span className="ml-2 text-sm text-gray-700">
+                      All Categories
+                    </span>
                   </label>
                   {categories.map((category) => (
                     <label key={category} className="flex items-center">
@@ -99,7 +107,9 @@ export default function SideBar() {
                         onChange={() => handleCategoryChange(category)}
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                       />
-                      <span className="ml-2 text-sm text-gray-700">{category}</span>
+                      <span className="ml-2 text-sm text-gray-700">
+                        {category}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -107,11 +117,18 @@ export default function SideBar() {
 
               {/* Price Range Filter */}
               <div>
-                <h3 className="text-md font-medium text-blue-950 mb-3">Price Range</h3>
+                <h3 className="text-md font-medium text-blue-950 mb-3">
+                  Price Range
+                </h3>
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
                     <div className="flex-1">
-                      <label htmlFor="minPrice" className="block text-xs text-gray-500 mb-1">Min Price</label>
+                      <label
+                        htmlFor="minPrice"
+                        className="block text-xs text-gray-500 mb-1"
+                      >
+                        Min Price
+                      </label>
                       <input
                         id="minPrice"
                         name="minPrice"
@@ -119,31 +136,45 @@ export default function SideBar() {
                         min={minPrice}
                         max={maxPrice}
                         value={priceRange[0]}
-                        onChange={(e) => handlePriceChange(0, parseInt(e.target.value) || minPrice)}
+                        onChange={(e) =>
+                          handlePriceChange(
+                            0,
+                            parseInt(e.target.value) || minPrice
+                          )
+                        }
                         className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div className="flex-1">
-                      <label htmlFor="maxPrice" className="block text-xs text-gray-500 mb-1">Max Price</label>
+                      <label
+                        htmlFor="maxPrice"
+                        className="block text-xs text-gray-500 mb-1"
+                      >
+                        Max Price
+                      </label>
                       <input
                         id="maxPrice"
                         name="maxPrice"
                         type="number"
                         max={maxPrice}
                         value={priceRange[1]}
-                        onChange={(e) => handlePriceChange(1, parseInt(e.target.value) || maxPrice)}
+                        onChange={(e) =>
+                          handlePriceChange(
+                            1,
+                            parseInt(e.target.value) || maxPrice
+                          )
+                        }
                         className="w-full px-2 py-1 text-sm border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                   </div>
-                  
                 </div>
               </div>
 
               {/* Clear Filters Button */}
               <button
                 onClick={() => {
-                  setSelectedCategory('');
+                  setSelectedCategory("");
                   setPriceRange([minPrice, maxPrice]);
                 }}
                 className="w-full px-4 py-2 text-sm text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
@@ -152,7 +183,6 @@ export default function SideBar() {
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </>
